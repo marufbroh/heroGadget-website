@@ -1,14 +1,32 @@
-import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import React, { useContext } from 'react';
 import ProductCard from './Cards/ProductCard';
 import { addToDb } from '../utils/fakeDB';
+import { CartContext, ProductsContext } from '../App';
+import { toast } from 'react-hot-toast';
 
 const Shop = () => {
-    const products = useLoaderData();
+    const products = useContext(ProductsContext)
+    const [cart, setCart] = useContext(CartContext || [])
 
-    const handleAddToCart = (id) => {
-        // console.log("🚀 ~ file: Shop.jsx:9 ~ handleAddToCart ~ id:", id)
-        addToDb(id)
+    const handleAddToCart = (product) => {
+        let newCart = []
+        const exists = cart.find(
+            existingProduct => existingProduct.id === product.id
+        )
+        if (!exists) {
+            product.quantity = 1
+            newCart = [...cart, product]
+        } else {
+            exists.quantity = exists.quantity + 1
+            const rest = cart.filter(
+                existingProduct => existingProduct.id !== product.id
+            )
+            newCart = [...rest, exists]
+        }
+
+        setCart(newCart)
+        addToDb(product.id)
+        toast.success('Product Added! 🛒', { autoClose: 500 })
     }
 
     return (
