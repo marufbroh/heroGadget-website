@@ -8,6 +8,7 @@ import ErrorPage from './components/ErrorPage'
 import Shop from './components/Shop'
 import Cart from './components/Cart'
 import About from './components/About'
+import cartProductsLoader from './loaders/cartProductsLoader'
 const router = createBrowserRouter([
     {
         path: '/',
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'cart',
-                element: <Cart />
+                element: <Cart />,
+                loader: cartProductsLoader
             },
             {
                 path: 'about',

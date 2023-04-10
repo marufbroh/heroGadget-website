@@ -7,15 +7,17 @@ const Shop = () => {
     const products = useLoaderData();
 
     const handleAddToCart = (id) => {
-        console.log("🚀 ~ file: Shop.jsx:9 ~ handleAddToCart ~ id:", id)
+        // console.log("🚀 ~ file: Shop.jsx:9 ~ handleAddToCart ~ id:", id)
         addToDb(id)
     }
 
     return (
-        <div className='product-container'>
-            {
-                products.map(product => <ProductCard key={product.id} product={product} handleAddToCart={handleAddToCart} />)
-            }
+        <div className='my-container'>
+            <div className='product-container'>
+                {
+                    products.map(product => <ProductCard key={product.id} product={product} handleAddToCart={handleAddToCart} />)
+                }
+            </div>
         </div>
     );
 };
